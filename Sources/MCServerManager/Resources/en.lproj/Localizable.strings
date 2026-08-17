@@ -1,0 +1,73 @@
+/* Main window */
+"ダッシュボード" = "Dashboard";
+"コンソール" = "Console";
+"ユーザー" = "Users";
+"サーバー" = "Servers";
+"設定" = "Settings";
+"稼働中" = "Running";
+"停止" = "Stop";
+"起動" = "Start";
+"削除" = "Delete";
+"取消" = "Cancel";
+"キャンセル" = "Cancel";
+"追加" = "Add";
+"表示" = "Show";
+"表示中" = "Selected";
+"送信" = "Send";
+"有効" = "Enabled";
+
+/* Setup and profiles */
+"サーバーフォルダを設定" = "Set server folder";
+"Paper / Spigot サーバーのフォルダを選択してください\n(server.properties が含まれているフォルダ)" = "Select a Paper, Spigot, Purpur, or vanilla server folder\n(the folder containing server.properties)";
+"サーバーフォルダ" = "Server folder";
+"選択..." = "Choose…";
+"有効なサーバーフォルダです" = "This is a valid server folder";
+"このフォルダを登録して開始" = "Register this folder and continue";
+"既存のプロファイルを使う" = "Use an existing profile";
+"サーバープロファイル" = "Server profiles";
+"サーバーを追加" = "Add server";
+"プロファイルがありません" = "No profiles";
+"「自動検出」または「追加」で登録" = "Register one with Auto-detect or Add";
+"自動検出" = "Auto-detect";
+"表示名（省略可）" = "Display name (optional)";
+"アプリ起動時にこのサーバーを自動起動" = "Start this server when the app opens";
+
+/* Dashboard and console */
+"自動スクロール" = "Auto-scroll";
+"WARN/ERR のみ" = "WARN/ERR only";
+"ログをクリア" = "Clear logs";
+"サーバー起動中 — コマンド経由で追加します" = "Server is running — changes are sent as commands";
+"停止中でも追加可能 — キャッシュ / オフライン UUID を使用" = "Can add while stopped — uses cache/offline UUID";
+"停止中・統合版 — 次回起動時にコマンドで適用されます" = "Stopped / Bedrock — applied by command on next start";
+"次回サーバー起動時に適用" = "Apply on next server start";
+"保留中（次回起動時に適用）" = "Pending (applied on next start)";
+
+/* Users */
+"統合版" = "Bedrock";
+"統合版・保留" = "Bedrock / pending";
+"統合版に変更" = "Change to Bedrock";
+"CSV" = "CSV";
+
+/* Settings and Web API */
+"API" = "API";
+"API 仕様" = "API specification";
+"ポート番号" = "Port";
+"パスワード" = "Password";
+"接続先 URL" = "Connection URL";
+"外部サイトからこのアプリのすべての機能を操作できるようになります" = "Allows external sites to control this app's management features";
+"Authorization: Bearer <パスワード> ヘッダーが必要です" = "The Authorization: Bearer <password> header is required";
+"iPad / iPhone から接続する場合" = "Connecting from an iPad or iPhone";
+"設定を適用・再起動" = "Apply settings and restart";
+"● オンライン" = "● Online";
+"HTTPS サイトから HTTP API への接続はブラウザがブロックします（Mixed Content）。\nSafari で直接 URL を開いてください — アプリ内管理ページが表示されます。" = "Browsers block HTTP API requests from HTTPS sites (mixed content).\nOpen the URL directly in Safari to use the built-in management page.";
+"⚠️ パスワード未設定: 同一ネットワーク内の誰でも操作できます" = "⚠️ No password: anyone on the same network can control the app";
+
+/* Accessibility/help text */
+"終了 (サーバーを安全に停止)" = "Quit (safely stop servers)";
+"リストを更新" = "Refresh list";
+"ダッシュボード・コンソールに表示" = "Show in Dashboard and Console";
+"コピー" = "Copy";
+"管理者アカウントは変更できません" = "Operator accounts cannot be modified here";
+"統合版プレイヤーとして再登録します" = "Register again as a Bedrock player";
+"縦1列CSVからホワイトリストに一括追加（ヘッダーなし）" = "Import a one-column CSV into the whitelist (no header)";
+"プレイヤーの種別を選択（自動=キャッシュ参照→推測）" = "Select the player edition (Auto uses cache, then inference)";

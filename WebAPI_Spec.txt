@@ -1,0 +1,326 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  MCS Manager v1.0.0 — Webページ / API 仕様書
+  内蔵Web管理画面および外部サイトからの遠隔管理向け
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+■ 概要
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- プロトコル : HTTP/1.1 (平文)
+- データ形式 : JSON (application/json; charset=utf-8)
+- デフォルトポート: 25580 (アプリの「設定」タブで変更可能)
+- CORS ヘッダー: すべてのオリジンを許可 (Access-Control-Allow-Origin: *)
+- アプリの「設定」タブで有効化後に使用できます
+- ブラウザでルートURL (GET /) を開くと内蔵Web管理画面を表示します
+
+■ v6.0以降の追加エンドポイント
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+GET    /api/servers/{id}/metrics
+GET    /api/servers/{id}/settings
+POST   /api/servers/{id}/settings
+POST   /api/servers/{id}/whitelist-enabled  {"enabled":true}
+DELETE /api/servers/{id}
+
+DELETE は管理一覧から登録を解除するだけで、サーバーフォルダやワールドを削除しません。
+設定変更は安全のためサーバー停止中のみ受け付けます。
+
+■ 接続先 URL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+同一ネットワーク内（自宅 Wi-Fi など）:
+  http://<MacのローカルIP>:<ポート>/api/...
+  例: http://192.168.1.10:25580/api/status
+
+同一Mac内のみ:
+  http://127.0.0.1:25580/api/...
+
+外出先（インターネット経由）:
+  ルーターでポートフォワーディングを設定するか、
+  Tailscale / Cloudflare Tunnel などで VPN を使ってください。
+  注意: パスワードを必ず設定してください。
+
+■ 認証
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+アプリの「設定」タブでパスワードを設定すると認証が有効になります。
+パスワード未設定の場合は認証なしでアクセス可能（同一ネット内のみ推奨）。
+
+認証ヘッダー:
+  Authorization: Bearer <パスワード>
+
+パスワードが一致しない場合のレスポンス:
+  HTTP 401  {"error":"unauthorized"}
+
+■ CORS プリフライト
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+OPTIONS リクエストには自動的に 200 で応答します。
+ウェブサイト側で fetch() を使う場合のヘッダー例:
+
+  fetch('http://192.168.1.10:25580/api/status', {
+    headers: {
+      'Authorization': 'Bearer your_password',
+      'Content-Type': 'application/json'
+    }
+  })
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+■ エンドポイント一覧
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ┌──────────────────────────────────────────────────────────┐
+  │ グローバル                                                │
+  ├──────────────────────────────────────────────────────────┤
+  │ GET  /api/status     全サーバーの状態一覧                  │
+  │ GET  /api/servers    登録済みプロファイル一覧               │
+  ├──────────────────────────────────────────────────────────┤
+  │ サーバー操作  (id = プロファイルの UUID)                    │
+  ├──────────────────────────────────────────────────────────┤
+  │ POST /api/servers/{id}/start      サーバー起動             │
+  │ POST /api/servers/{id}/stop       サーバー停止（stop コマ）│
+  │ POST /api/servers/{id}/restart    再起動                  │
+  │ POST /api/servers/{id}/kill       強制終了                 │
+  │ POST /api/servers/{id}/command    コマンド送信             │
+  │ GET  /api/servers/{id}/logs       直近200行ログ取得        │
+  │ GET  /api/servers/{id}/players    オンラインプレイヤー       │
+  ├──────────────────────────────────────────────────────────┤
+  │ ホワイトリスト                                            │
+  ├──────────────────────────────────────────────────────────┤
+  │ GET    /api/servers/{id}/whitelist       一覧取得          │
+  │ POST   /api/servers/{id}/whitelist       プレイヤー追加     │
+  │ DELETE /api/servers/{id}/whitelist/{uuid} 削除            │
+  ├──────────────────────────────────────────────────────────┤
+  │ OP 管理                                                   │
+  ├──────────────────────────────────────────────────────────┤
+  │ GET    /api/servers/{id}/ops             OP 一覧          │
+  │ POST   /api/servers/{id}/ops             OP 追加          │
+  │ DELETE /api/servers/{id}/ops/{uuid}      OP 削除          │
+  ├──────────────────────────────────────────────────────────┤
+  │ BAN 管理                                                  │
+  ├──────────────────────────────────────────────────────────┤
+  │ GET  /api/servers/{id}/bans              BAN 一覧         │
+  │ POST /api/servers/{id}/bans/{name}/pardon BAN 解除        │
+  └──────────────────────────────────────────────────────────┘
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+■ エンドポイント詳細
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+▼ GET /api/status
+  全サーバーのステータスを返します。
+
+  レスポンス例:
+  {
+    "appVersion": "1.0.0",
+    "servers": [
+      {
+        "id": "550e8400-e29b-41d4-a716-446655440000",
+        "name": "New_main",
+        "status": "running",      // stopped / starting / running / stopping
+        "playerCount": 3,
+        "maxPlayers": 40,
+        "port": 25565,
+        "uptime": 3720,           // 秒
+        "jar": "paper-1.21.4.jar"
+      }
+    ]
+  }
+
+▼ GET /api/servers
+  登録済みプロファイルと各サーバーの状態を返します。
+
+  レスポンス例:
+  {
+    "servers": [
+      {
+        "id": "550e8400-...",
+        "name": "New_main",
+        "path": "/path/to/your/minecraft-server",
+        "status": "running",
+        "playerCount": 3,
+        "maxPlayers": 40,
+        "port": 25565,
+        "jar": "paper-1.21.4.jar"
+      }
+    ]
+  }
+
+▼ POST /api/servers/{id}/start
+  サーバーを起動します。すでに起動している場合は何もしません。
+
+  リクエストボディ: なし
+  レスポンス: {"ok": true}
+
+▼ POST /api/servers/{id}/stop
+  "stop" コマンドを送信してサーバーを停止します。
+
+  リクエストボディ: なし
+  レスポンス: {"ok": true}
+
+▼ POST /api/servers/{id}/command
+  任意のコンソールコマンドを送信します（サーバーが起動中の場合のみ有効）。
+
+  リクエストボディ:
+  {"command": "say Hello World"}
+
+  レスポンス:
+  {"ok": true, "command": "say Hello World"}
+
+  エラー（サーバー停止中）:
+  HTTP 409  {"error": "server not running"}
+
+▼ GET /api/servers/{id}/logs
+  直近 200 行のログを返します。
+
+  レスポンス例:
+  {
+    "total": 1234,
+    "logs": [
+      {
+        "time": "12:34:56",
+        "level": "INFO",       // INFO / WARN / ERRR / DBUG / (空)
+        "message": "Done (3.456s)! For help, type \"help\""
+      }
+    ]
+  }
+
+▼ GET /api/servers/{id}/players
+  オンラインプレイヤー一覧を返します。
+
+  レスポンス例:
+  {"count": 2, "players": ["t329", ".chacha11245281"]}
+
+▼ GET /api/servers/{id}/whitelist
+  ホワイトリストと保留中エントリの一覧を返します。
+
+  レスポンス例:
+  {
+    "whitelist": [
+      {"uuid": "550e8400-...", "name": "t329",          "pending": false},
+      {"uuid": "",             "name": ".newplayer",    "pending": true, "command": "whitelist add .newplayer"}
+    ]
+  }
+
+  pending=true のエントリは pending_whitelist.json に保存された
+  統合版プレイヤーで、次回サーバー起動時に whitelist add コマンドが
+  実行されます。
+
+▼ POST /api/servers/{id}/whitelist
+  プレイヤーをホワイトリストに追加します。
+
+  リクエストボディ:
+  {"name": "PlayerName"}
+
+  Java プレイヤー（サーバー停止中）の場合:
+    - usercache.json を参照し、なければオフライン UUID を計算して追加
+  統合版プレイヤー（Floodgate プレフィックス付き）の場合:
+    - サーバー起動中: whitelist add コマンドを送信
+    - サーバー停止中: pending_whitelist.json に保存（次回起動時適用）
+
+  レスポンス例:
+  {"ok": true, "method": "キャッシュ"}
+  {"ok": true, "method": "pending (bedrock)"}
+
+▼ DELETE /api/servers/{id}/whitelist/{uuid}
+  指定 UUID のプレイヤーをホワイトリストから削除します。
+  サーバー起動中は "whitelist remove <name>" コマンドを送信します。
+
+  レスポンス: {"ok": true}
+
+▼ POST /api/servers/{id}/ops
+  プレイヤーを OP に追加します。
+
+  リクエストボディ:
+  {"name": "PlayerName"}
+
+▼ DELETE /api/servers/{id}/ops/{uuid}
+  指定 UUID のプレイヤーの OP を解除します。
+
+▼ GET /api/servers/{id}/bans
+  BAN 済みプレイヤーの一覧を返します。
+
+  レスポンス例:
+  {
+    "bans": [
+      {"uuid": "...", "name": "Griefer123", "reason": "Griefing"}
+    ]
+  }
+
+▼ POST /api/servers/{id}/bans/{name}/pardon
+  指定名前のプレイヤーの BAN を解除します。
+  サーバー起動中は "pardon <name>" コマンドを送信します。
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+■ ウェブサイト実装ガイド（別セッションで作成するサイト向け）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+【推奨構成】
+  GitHub Pages (github.io) に静的 HTML/JS サイトをホスト。
+  ユーザーがブラウザ上でローカル IP + ポートを入力 → fetch() で API 呼び出し。
+
+【接続設定 UI に必要な項目】
+  - ホスト/IP 入力欄  例: 192.168.1.10
+  - ポート入力欄      例: 25580
+  - パスワード入力欄  （Bearer トークン）
+  - 「接続テスト」ボタン → GET /api/status を呼んで確認
+
+【セキュリティ上の注意】
+  - HTTP（平文）なので外出先からの利用にはポートフォワーディング
+    ではなく Tailscale や Cloudflare Tunnel を強く推奨
+  - パスワードは必ず設定してください
+  - 公衆 Wi-Fi などからの利用は危険です（平文通信のため）
+
+【サイトの機能要件（推奨）】
+  1. ダッシュボード
+     - 全サーバーのステータスカード（GET /api/status でポーリング）
+     - 各サーバーの起動/停止/再起動ボタン
+     - オンラインプレイヤー一覧
+  2. コンソール
+     - ログ表示（GET /api/servers/{id}/logs を数秒ごとにポーリング）
+     - コマンド送信フォーム（POST /api/servers/{id}/command）
+  3. ユーザー管理
+     - ホワイトリスト一覧・追加・削除
+     - OP 一覧・追加・削除
+     - BAN 一覧・pardon
+  4. 接続設定ページ
+     - IP / ポート / パスワードの入力・保存（localStorage）
+
+【JavaScript fetch 例】
+  const BASE = `http://${host}:${port}`;
+  const HEADERS = {
+    'Authorization': `Bearer ${password}`,
+    'Content-Type':  'application/json'
+  };
+
+  // サーバー起動
+  await fetch(`${BASE}/api/servers/${serverId}/start`, {
+    method: 'POST', headers: HEADERS
+  });
+
+  // コマンド送信
+  await fetch(`${BASE}/api/servers/${serverId}/command`, {
+    method: 'POST',
+    headers: HEADERS,
+    body: JSON.stringify({ command: 'say Hello' })
+  });
+
+  // ホワイトリストに追加
+  await fetch(`${BASE}/api/servers/${serverId}/whitelist`, {
+    method: 'POST',
+    headers: HEADERS,
+    body: JSON.stringify({ name: '.BedrockPlayer' })
+  });
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+■ {id} の調べ方
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  GET /api/servers のレスポンスの "id" フィールドを使用してください。
+  例: "550e8400-e29b-41d4-a716-446655440000"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+■ エラーレスポンス
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  400  {"error": "bad request"}         リクエスト形式エラー
+  401  {"error": "unauthorized"}        パスワード不一致
+  404  {"error": "not found"}           エンドポイントまたはサーバーが存在しない
+  409  {"error": "server not running"}  コマンド送信時にサーバーが停止中
+  422  {"error": "cannot resolve uuid"} 統合版未接続プレイヤーの UUID 解決失敗
+  500  {"error": "..."}                 内部エラー
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

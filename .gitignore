@@ -1,0 +1,27 @@
+# Swift / Xcode build output
+.build/
+.swiftpm/
+DerivedData/
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+
+# Packaged applications and disk images belong in GitHub Releases
+MCServerManager.app/
+*.dmg
+
+# macOS and editor state
+.DS_Store
+*.swp
+*.swo
+
+# Runtime state must never be committed
+.mcsmanager.pid
+pending_whitelist.json
+
+# Superseded local-only design and packaging material
+DESIGN_SPEC.txt
+WebSite_Implementation_Guide.txt
+package_dmg.sh
+package_source_dmg.sh
+_dmg_stage/
+_src_dmg_stage/
