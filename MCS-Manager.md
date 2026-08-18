@@ -10,6 +10,8 @@
 - Cloudflare Pagesプロジェクト名: `mcs-manager`
 - Cloudflare Pagesのproduction branch表記: `main`
 - GitHub Pagesは使用しない。
+- Web公開用ワークフロー: `.github/workflows/deploy-cloudflare-pages.yml`
+- `main`上の公開用Web資産が更新されるとGitHub ActionsからCloudflare Pagesへ自動デプロイされる。
 - Webサイトは公開用ファイルだけをCloudflare Pagesへ直接デプロイする。Swiftソース、レポート、このメモを配信物へ含めない。
 - Cloudflare認証情報はソース、コミット、ログ、この文書へ転記しない。必要時は非公開の共通ルール文書を参照する。
 
@@ -58,6 +60,10 @@
 
 - 公開対象: `index.html`、`favicon.svg`、`og-image.png`、`robots.txt`、`sitemap.xml`。
 - `og-image.svg`はOG画像の編集元であり、通常は公開必須ではない。
+- 自動デプロイ対象の変更ファイルは上記5ファイルとワークフロー自身。アプリコードやこのメモだけの変更ではデプロイしない。
+- GitHub ActionsのRepository secretsとして`CLOUDFLARE_API_TOKEN`と`CLOUDFLARE_ACCOUNT_ID`が必要。値をワークフローへ直書きしない。
+- ワークフローは`.pages-dist`へ公開用5ファイルだけをコピーしてからデプロイする。公開対象を増減した場合は、トリガー、コピー処理、ファイル数検証、この文書を同時に更新する。
+- 通常は`main`へのpushによる自動デプロイを使用する。手動のWranglerデプロイは障害復旧や初期設定時だけにする。
 - canonical、`og:url`、`og:image`、Twitter画像、JSON-LDの`url`はCloudflare Pagesの正式URLを使用する。
 - 標準検索語として、アプリ名の英語・日本語表記、`折田悠希`、`おりたゆうき`、`Yuki_Orita`、`GitHub`を確認する。
 - デスクトップと390px幅のモバイルで横スクロール、見出しの孤立、固定ヘッダーとの重なりを確認する。
@@ -71,6 +77,6 @@
 - 長期間のメトリクス保存と比較表示。
 - メモリ増加傾向の判定期間・閾値の設定項目化。
 - Cloudflareの独自ドメインと寄付導線。
-- 自動テスト、リリース、Cloudflare PagesデプロイのCI化。
+- アプリの自動テストとRelease作成のCI化。
 
 上記は予定を保証するものではない。実装前に優先度、保守負担、安全性を再評価する。
