@@ -13,6 +13,7 @@ MCServerManager.app/
 .DS_Store
 *.swp
 *.swo
+.wrangler/
 
 # Runtime state must never be committed
 .mcsmanager.pid
