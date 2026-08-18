@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#07090d"/>
+  <path d="M0 78h1200M70 0v630M1130 0v630" stroke="#202938"/>
+  <g transform="translate(70 64)">
+    <path d="M18 0 36 18 18 36 0 18Z" fill="none" stroke="#55a5ff" stroke-width="2"/>
+    <text x="52" y="25" fill="#f5f7fb" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="22" font-weight="700">MCS Manager</text>
+    <text x="990" y="23" fill="#646d7e" font-family="monospace" font-size="14" text-anchor="end">v1.0.0 / macOS</text>
+  </g>
+  <text x="70" y="220" fill="#f5f7fb" font-family="-apple-system,BlinkMacSystemFont,'Noto Sans JP',sans-serif" font-size="82" font-weight="750" letter-spacing="-5">鯖管理を、一か所に。</text>
+  <text x="73" y="274" fill="#929bad" font-family="-apple-system,BlinkMacSystemFont,'Noto Sans JP',sans-serif" font-size="24">Minecraft Java Edition server operations for macOS.</text>
+  <g transform="translate(70 352)">
+    <rect width="1060" height="176" rx="12" fill="#0c1017" stroke="#354258"/>
+    <circle cx="28" cy="25" r="4" fill="#58d68d"/>
+    <text x="43" y="30" fill="#58d68d" font-family="monospace" font-size="15">SURVIVAL SERVER / ONLINE</text>
+    <g transform="translate(24 61)" font-family="monospace">
+      <g><rect width="235" height="88" fill="#121824" stroke="#202938"/><text x="16" y="26" fill="#646d7e" font-size="12">PLAYERS</text><text x="16" y="63" fill="#f5f7fb" font-size="30">12 / 30</text></g>
+      <g transform="translate(251)"><rect width="235" height="88" fill="#121824" stroke="#202938"/><text x="16" y="26" fill="#646d7e" font-size="12">MEMORY</text><text x="16" y="63" fill="#f5f7fb" font-size="30">4.8 GB</text></g>
+      <g transform="translate(502)"><rect width="235" height="88" fill="#121824" stroke="#202938"/><text x="16" y="26" fill="#646d7e" font-size="12">TPS</text><text x="16" y="63" fill="#58d68d" font-size="30">19.98</text></g>
+      <g transform="translate(753)"><rect width="259" height="88" fill="#121824" stroke="#202938"/><text x="16" y="26" fill="#646d7e" font-size="12">LATENCY</text><text x="16" y="63" fill="#55a5ff" font-size="30">24 ms</text></g>
+    </g>
+  </g>
+  <text x="70" y="588" fill="#646d7e" font-family="monospace" font-size="13">OPEN SOURCE · MIT LICENSE · YUKI_ORITA</text>
+</svg>
