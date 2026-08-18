@@ -7,7 +7,7 @@ Copyright © 2026 Yuki_Orita. Released under the MIT License.
 Current release: **v1.0.0**. The post-fix quality assessment is documented in
 [`QUALITY_AUDIT_REPORT.md`](QUALITY_AUDIT_REPORT.md).
 
-公式紹介ページ: [MCS Manager](https://oriyu90.github.io/MCS-Manager/)
+公式紹介ページ: [MCS Manager](https://mcs-manager.pages.dev/)
 
 ### v1.0.0 UI improvements
 

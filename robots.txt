@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://oriyu90.github.io/MCS-Manager/sitemap.xml
+Sitemap: https://mcs-manager.pages.dev/sitemap.xml
