@@ -203,14 +203,13 @@
       text-transform: uppercase;
     }
     .hero h1 {
-      max-width: 10ch;
       margin: 0;
       font-size: clamp(3.4rem, 7.4vw, 7.4rem);
       font-weight: 780;
       line-height: .98;
       letter-spacing: -.065em;
     }
-    .hero h1 span { color: var(--blue); }
+    .hero h1 span { display: block; margin-top: .12em; color: var(--blue); }
     .hero-copy {
       max-width: 36rem;
       margin: 30px 0 0;
@@ -446,7 +445,6 @@
       :root { --page: min(100% - 32px, 720px); }
       .nav-links a:not(.nav-download) { display: none; }
       .hero { min-height: auto; grid-template-columns: 1fr; padding-top: 88px; }
-      .hero h1 { max-width: 9ch; }
       .product-frame { width: min(100%, 620px); margin: 0 auto; transform: none; }
       .floating-status { right: 18px; }
       .trust-inner { grid-template-columns: 1fr 1fr; }
