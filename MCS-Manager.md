@@ -12,7 +12,7 @@
 - GitHub Pagesは使用しない。
 - Cloudflare PagesのGit source: GitHub `oriyu90/MCS-Manager`
 - `main`上の公開用Web資産が更新されると、CloudflareのGit連携ビルドから自動デプロイされる。
-- Cloudflareのビルドコマンドで公開用5ファイルだけを`.pages-dist`へコピーする。Swiftソース、レポート、このメモを配信物へ含めない。
+- Cloudflareのビルドコマンドで公開用6ファイルだけを`.pages-dist`へコピーする。Swiftソース、レポート、このメモを配信物へ含めない。
 - GitHub ActionsによるPagesデプロイは使用しない。Cloudflare側のGit連携を唯一の自動公開経路とする。
 - Cloudflare認証情報はソース、コミット、ログ、この文書へ転記しない。必要時は非公開の共通ルール文書を参照する。
 
@@ -59,10 +59,10 @@
 
 ## Webサイト保守
 
-- 公開対象: `index.html`、`favicon.svg`、`og-image.png`、`robots.txt`、`sitemap.xml`。
+- 公開対象: `index.html`、`404.html`、`favicon.svg`、`og-image.png`、`robots.txt`、`sitemap.xml`。
 - `og-image.svg`はOG画像の編集元であり、通常は公開必須ではない。
 - CloudflareのGit連携で監視するパスは上記5ファイル。アプリコードやこのメモだけの変更ではデプロイしない。
-- Cloudflare build command: `mkdir -p .pages-dist && cp index.html favicon.svg og-image.png robots.txt sitemap.xml .pages-dist/`
+- Cloudflare build command: `mkdir -p .pages-dist && cp index.html 404.html favicon.svg og-image.png robots.txt sitemap.xml .pages-dist/`
 - Cloudflare build output directory: `.pages-dist`
 - 公開対象を増減した場合は、Cloudflareの監視パス、build command、この文書を同時に更新する。
 - productionは`main`、その他のブランチはpreview deploymentとして扱う。
@@ -71,6 +71,7 @@
 - 標準検索語として、アプリ名の英語・日本語表記、`折田悠希`、`おりたゆうき`、`Yuki_Orita`、`GitHub`を確認する。
 - デスクトップと390px幅のモバイルで横スクロール、見出しの孤立、固定ヘッダーとの重なりを確認する。
 - 主要リンクと公開資産のHTTP応答、重複ID、壊れたページ内アンカー、ブラウザのエラー／警告を確認する。
+- 存在しないURL、`MCS-Manager.md`、`Package.swift`、`Sources/`配下が404を返し、リポジトリ内部ファイルを配信していないことを確認する。
 - Search Consoleの所有権確認タグやファイルが発行された場合は、値を正確に追加し、このチェックリストへ追加場所を記録する。
 
 ## 今後の候補（未確定）
