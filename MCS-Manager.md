@@ -10,9 +10,10 @@
 - Cloudflare Pagesプロジェクト名: `mcs-manager`
 - Cloudflare Pagesのproduction branch表記: `main`
 - GitHub Pagesは使用しない。
-- Web公開用ワークフロー: `.github/workflows/deploy-cloudflare-pages.yml`
-- `main`上の公開用Web資産が更新されるとGitHub ActionsからCloudflare Pagesへ自動デプロイされる。
-- Webサイトは公開用ファイルだけをCloudflare Pagesへ直接デプロイする。Swiftソース、レポート、このメモを配信物へ含めない。
+- Cloudflare PagesのGit source: GitHub `oriyu90/MCS-Manager`
+- `main`上の公開用Web資産が更新されると、CloudflareのGit連携ビルドから自動デプロイされる。
+- Cloudflareのビルドコマンドで公開用5ファイルだけを`.pages-dist`へコピーする。Swiftソース、レポート、このメモを配信物へ含めない。
+- GitHub ActionsによるPagesデプロイは使用しない。Cloudflare側のGit連携を唯一の自動公開経路とする。
 - Cloudflare認証情報はソース、コミット、ログ、この文書へ転記しない。必要時は非公開の共通ルール文書を参照する。
 
 ## 共通連絡先
@@ -32,7 +33,7 @@
 3. `sitemap.xml`の`lastmod`を実際の公開日に更新する。
 4. `og-image.svg`のバージョン表示を更新し、1200×630pxの`og-image.png`を再生成する。
 5. DMGのファイル名、容量、SHA-256を確認し、GitHub Releaseへ添付する。
-6. Release作成後にWebサイトを更新し、Cloudflare Pagesへ再デプロイする。
+6. Release作成後にWebサイトを更新して`main`へpushし、Cloudflare PagesのGitビルド完了を確認する。
 7. 公開URL、DMG、Discord、X、公式サイト、robots、sitemapがHTTP 200を返すことを確認する。
 8. Google Search Consoleで新しいサイトマップを再送信する必要があるか確認する。
 
@@ -60,10 +61,12 @@
 
 - 公開対象: `index.html`、`favicon.svg`、`og-image.png`、`robots.txt`、`sitemap.xml`。
 - `og-image.svg`はOG画像の編集元であり、通常は公開必須ではない。
-- 自動デプロイ対象の変更ファイルは上記5ファイルとワークフロー自身。アプリコードやこのメモだけの変更ではデプロイしない。
-- GitHub ActionsのRepository secretsとして`CLOUDFLARE_API_TOKEN`と`CLOUDFLARE_ACCOUNT_ID`が必要。値をワークフローへ直書きしない。
-- ワークフローは`.pages-dist`へ公開用5ファイルだけをコピーしてからデプロイする。公開対象を増減した場合は、トリガー、コピー処理、ファイル数検証、この文書を同時に更新する。
-- 通常は`main`へのpushによる自動デプロイを使用する。手動のWranglerデプロイは障害復旧や初期設定時だけにする。
+- CloudflareのGit連携で監視するパスは上記5ファイル。アプリコードやこのメモだけの変更ではデプロイしない。
+- Cloudflare build command: `mkdir -p .pages-dist && cp index.html favicon.svg og-image.png robots.txt sitemap.xml .pages-dist/`
+- Cloudflare build output directory: `.pages-dist`
+- 公開対象を増減した場合は、Cloudflareの監視パス、build command、この文書を同時に更新する。
+- productionは`main`、その他のブランチはpreview deploymentとして扱う。
+- Direct Upload版へは戻せない。通常はGitHubへのpushによるCloudflare Gitビルドを使用する。
 - canonical、`og:url`、`og:image`、Twitter画像、JSON-LDの`url`はCloudflare Pagesの正式URLを使用する。
 - 標準検索語として、アプリ名の英語・日本語表記、`折田悠希`、`おりたゆうき`、`Yuki_Orita`、`GitHub`を確認する。
 - デスクトップと390px幅のモバイルで横スクロール、見出しの孤立、固定ヘッダーとの重なりを確認する。
