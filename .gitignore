@@ -14,6 +14,7 @@ MCServerManager.app/
 *.swp
 *.swo
 .wrangler/
+.pages-dist/
 
 # Runtime state must never be committed
 .mcsmanager.pid
