@@ -6,7 +6,7 @@
 
 - リポジトリ: `oriyu90/MCS-Manager`
 - macOSアプリの現在バージョン: `v1.0.0`
-- Webサイト: `https://mcs-manager.pages.dev/`
+- Webサイト: `https://studio-rizi.pages.dev/projects/mcs-manager/`
 - Cloudflare Pagesプロジェクト名: `mcs-manager`
 - Cloudflare Pagesのproduction branch表記: `main`
 - GitHub Pagesは使用しない。
@@ -22,7 +22,7 @@
 - 著作権表記: `Copyright © 2026 Yuki_Orita`
 - Discord: `https://discord.gg/x7KXhNTD8M`
 - X: `https://x.com/InovateofRIZI`
-- 開発者公式サイト: `https://oriyu90.github.io/official/`
+- 開発者公式サイト: `https://studio-rizi.pages.dev/`
 
 共通連絡先が変更された場合は、`index.html`、`README.md`、構造化データ、OG情報、Release本文を横断して確認する。
 
