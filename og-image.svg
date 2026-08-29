@@ -4,7 +4,7 @@
   <g transform="translate(70 64)">
     <path d="M18 0 36 18 18 36 0 18Z" fill="none" stroke="#55a5ff" stroke-width="2"/>
     <text x="52" y="25" fill="#f5f7fb" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="22" font-weight="700">MCS Manager</text>
-    <text x="990" y="23" fill="#646d7e" font-family="monospace" font-size="14" text-anchor="end">v1.0.0 / macOS</text>
+    <text x="990" y="23" fill="#646d7e" font-family="monospace" font-size="14" text-anchor="end">v1.1.0 / macOS</text>
   </g>
   <text x="70" y="220" fill="#f5f7fb" font-family="-apple-system,BlinkMacSystemFont,'Noto Sans JP',sans-serif" font-size="82" font-weight="750" letter-spacing="-5">鯖管理を、一か所に。</text>
   <text x="73" y="274" fill="#929bad" font-family="-apple-system,BlinkMacSystemFont,'Noto Sans JP',sans-serif" font-size="24">Minecraft Java Edition server operations for macOS.</text>

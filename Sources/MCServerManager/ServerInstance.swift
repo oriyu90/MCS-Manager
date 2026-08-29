@@ -212,24 +212,14 @@ final class ServerInstance: ObservableObject, Identifiable {
             notify(title: "サーバー起動完了", body: "\(profile.name) が起動しました")
         }
 
-        if msg.contains("logged in with entity id") {
-            if let name = extractBeforeBracket(msg, suffix: "[/") {
-                if !onlinePlayers.contains(name) { onlinePlayers.append(name) }
-                notify(title: "参加", body: "\(name) が参加しました (\(profile.name))")
-            }
-        }
-
-        if msg.contains(" lost connection:") {
-            if let name = msg.components(separatedBy: " lost connection:").first?
-                .trimmingCharacters(in: .whitespaces), !name.isEmpty, !name.contains(" ") {
-                onlinePlayers.removeAll { $0 == name }
-            }
-        }
-        if msg.hasSuffix("left the game") {
-            if let name = msg.components(separatedBy: " left the game").first?
-                .trimmingCharacters(in: .whitespaces), !name.isEmpty, !name.contains(" ") {
-                onlinePlayers.removeAll { $0 == name }
-            }
+        switch LogParsing.playerEvent(from: msg) {
+        case .joined(let name):
+            if !onlinePlayers.contains(name) { onlinePlayers.append(name) }
+            notify(title: "参加", body: "\(name) が参加しました (\(profile.name))")
+        case .left(let name):
+            onlinePlayers.removeAll { $0 == name }
+        case .none:
+            break
         }
     }
 
@@ -310,12 +300,6 @@ final class ServerInstance: ObservableObject, Identifiable {
                 self.appendLog("[システム] 保留中のホワイトリスト \(pending.count) 件を適用しました")
             }
         }
-    }
-
-    private func extractBeforeBracket(_ s: String, suffix: String) -> String? {
-        guard let r = s.range(of: suffix) else { return nil }
-        let name = String(s[s.startIndex..<r.lowerBound]).trimmingCharacters(in: .whitespaces)
-        return name.isEmpty ? nil : name
     }
 
     private func findJavaBin(requiredMajor: Int) -> String? {

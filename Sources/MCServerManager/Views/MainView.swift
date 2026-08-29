@@ -81,7 +81,7 @@ struct MainView: View {
             VStack(alignment: .leading, spacing: 1) {
                 Text("MC Server Manager")
                     .font(.system(size: 13, weight: .semibold))
-                Text("v1.0.0")
+                Text("v1.1.0")
                     .font(.system(size: 9, weight: .medium, design: .monospaced))
                     .foregroundStyle(AppTheme.muted)
             }

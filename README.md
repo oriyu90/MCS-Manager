@@ -4,10 +4,16 @@ MCS Manager is a native macOS menu-bar application for running and remotely mana
 
 Copyright © 2026 Yuki_Orita. Released under the MIT License.
 
-Current release: **v1.0.0**. The post-fix quality assessment is documented in
+Current release: **v1.1.0**. The post-fix quality assessment is documented in
 [`QUALITY_AUDIT_REPORT.md`](QUALITY_AUDIT_REPORT.md).
 
 公式紹介ページ: [MCS Manager](https://studio-rizi.pages.dev/projects/mcs-manager/)
+
+### v1.1.0 changes
+
+- Forge / NeoForge の参加プレイヤーを正しく認識（ログ行の追加ブラケットに対応）
+- 内蔵Web管理画面の「ユーザー」タブでOP・BANもアプリと同じように操作可能
+- 未使用の重複Web UIを削除、ログ解析のユニットテストを追加
 
 ### v1.0.0 UI improvements
 

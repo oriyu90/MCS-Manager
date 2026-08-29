@@ -242,8 +242,12 @@ struct LogEntry: Identifiable {
     init(raw: String) {
         self.raw = raw
 
+        // Pattern 1 also tolerates the extra logger-name bracket that Forge / NeoForge
+        // (and some plugins) insert before the colon, e.g.
+        //   [12:34:56] [Server thread/INFO] [minecraft/PlayerList]: <message>
+        // Vanilla / Paper keep matching because the optional group repeats zero times.
         let patterns = [
-            #"^\[(\d{2}:\d{2}:\d{2})\] \[[^\]]+/(INFO|WARN|ERROR|DEBUG)\]: (.*)$"#,
+            #"^\[(\d{2}:\d{2}:\d{2})\] \[[^\]]+/(INFO|WARN|ERROR|DEBUG)\](?: \[[^\]]*\])*: (.*)$"#,
             #"^\[(\d{2}:\d{2}:\d{2}) (INFO|WARN|ERROR|DEBUG)\]: (.*)$"#,
         ]
 

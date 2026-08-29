@@ -3,7 +3,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 WORKSPACE_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
-VERSION="1.0.0"
+VERSION="1.1.0"
 APP_NAME="MCServerManager"
 DMG_NAME="MCSManager_v${VERSION}.dmg"
 STAGE="${TMPDIR:-/tmp}/mcs-manager-release-${VERSION}"

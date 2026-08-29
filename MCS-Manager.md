@@ -5,7 +5,7 @@
 ## 公開情報
 
 - リポジトリ: `oriyu90/MCS-Manager`
-- macOSアプリの現在バージョン: `v1.0.0`
+- macOSアプリの現在バージョン: `v1.1.0`
 - Webサイト: `https://studio-rizi.pages.dev/projects/mcs-manager/`
 - Cloudflare Pagesプロジェクト名: `mcs-manager`
 - Cloudflare Pagesのproduction branch表記: `main`
@@ -45,8 +45,20 @@
 - Mojang、Paper、Spigot、Purpur側の要件変更があり得るため、新しいMinecraft版を追加する際は公式情報を再確認する。
 - 独自の`start.sh`がある場合はスクリプト側のJava指定が優先される仕様を維持する。
 
+## ログ解析の注意
+
+- サーバー種別ごとにコンソール行の形式が異なる。`LogEntry`（`Models.swift`）の正規表現は
+  vanilla/Paper 形式と、Forge/NeoForge が挿入する `[Server thread/INFO] [logger/name]:`
+  の追加ブラケット形式の両方に対応する。新しいローダーを確認したらこの正規表現を再点検する。
+- 参加・退出の抽出は純粋関数 `LogParsing.playerEvent(from:)` に集約。挙動を変えるときは
+  `Tests/MCServerManagerTests/LogParsingTests.swift` を同時に更新する。
+- Web管理画面の「ユーザー」タブはホワイトリスト／OP／BANの3種を扱い、ネイティブアプリと
+  REST API に揃える。エンドポイントを増減したら `WebDashboard.swift` と `WebAPI_Spec.txt`
+  の両方を更新する。
+
 ## リリース前の重点確認
 
+- `swift test` が通ること（ログ解析の回帰確認）。
 - 日本語と英語の翻訳キー数・未翻訳・表示切れ。
 - Finder／ファイル選択パネルを初回操作から利用できること。
 - タブ切替時の不要な再構築、待ち時間、フォーカス移動。

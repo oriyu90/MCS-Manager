@@ -13,6 +13,11 @@ let package = Package(
             name: "MCServerManager",
             path: "Sources/MCServerManager",
             resources: [.process("Resources")]
+        ),
+        .testTarget(
+            name: "MCServerManagerTests",
+            dependencies: ["MCServerManager"],
+            path: "Tests/MCServerManagerTests"
         )
     ]
 )
